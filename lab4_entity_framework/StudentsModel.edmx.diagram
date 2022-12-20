@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d640467c430049428d13a228cb281b72" Name="Diagram1">
+        <EntityTypeShape EntityType="bdIlinModel.Оценки" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdIlinModel.Предметы" Width="2" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdIlinModel.Специальности" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdIlinModel.Студенты" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="bdIlinModel.FK_Оценки_Предметы" ManuallyRouted="false" />
+        <AssociationConnector Association="bdIlinModel.FK_Оценки_Студенты" ManuallyRouted="false" />
+        <AssociationConnector Association="bdIlinModel.FK_Студенты_Специальности" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

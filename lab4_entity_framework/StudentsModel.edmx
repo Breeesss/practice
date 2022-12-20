@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище bdIlinModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Оценки">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код студента" Type="bigint" />
+          <Property Name="Дата экзамена" Type="date" />
+          <Property Name="Код предмета" Type="bigint" />
+          <Property Name="Оценка" Type="tinyint" />
+          <Property Name="Код" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Предметы">
+          <Key>
+            <PropertyRef Name="Код предмета" />
+          </Key>
+          <Property Name="Код предмета" Type="bigint" Nullable="false" />
+          <Property Name="Наименование предмета" Type="varchar" MaxLength="50" />
+          <Property Name="Описание предмета" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Специальности">
+          <Key>
+            <PropertyRef Name="Код специальности" />
+          </Key>
+          <Property Name="Код специальности" Type="bigint" Nullable="false" />
+          <Property Name="Наименование специальности" Type="varchar" MaxLength="50" />
+          <Property Name="Описание специальности" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Студенты">
+          <Key>
+            <PropertyRef Name="Код студента" />
+          </Key>
+          <Property Name="Код студента" Type="bigint" Nullable="false" />
+          <Property Name="ФИО" Type="varchar" MaxLength="50" />
+          <Property Name="Пол" Type="varchar" MaxLength="50" />
+          <Property Name="Дата рождения" Type="date" />
+          <Property Name="Родители" Type="varchar" MaxLength="50" />
+          <Property Name="Адрес" Type="varchar(max)" />
+          <Property Name="Телефон" Type="varchar" MaxLength="15" />
+          <Property Name="Паспортные данные" Type="varchar(max)" />
+          <Property Name="Номер зачётки" Type="bigint" />
+          <Property Name="Дата поступления" Type="date" />
+          <Property Name="Группа" Type="varchar" MaxLength="30" />
+          <Property Name="Курс" Type="tinyint" />
+          <Property Name="Код специальности" Type="bigint" />
+          <Property Name="Очная форма обучения" Type="bit" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "bdIlin.dbo.Запрос Студент+Оценки" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="Запрос Студент+Оценки">
+          <Property Name="ФИО" Type="varchar" MaxLength="50" />
+          <Property Name="Дата экзамена" Type="date" />
+          <Property Name="Наименование предмета" Type="varchar" MaxLength="50" />
+          <Property Name="Оценка" Type="tinyint" />
+        </EntityType>-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "bdIlin.dbo.Запрос Студенты+Специальности" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="Запрос Студенты+Специальности">
+          <Property Name="ФИО" Type="varchar" MaxLength="50" />
+          <Property Name="Пол" Type="varchar" MaxLength="50" />
+          <Property Name="Дата рождения" Type="date" />
+          <Property Name="Родители" Type="varchar" MaxLength="50" />
+          <Property Name="Адрес" Type="varchar(max)" />
+          <Property Name="Телефон" Type="varchar" MaxLength="15" />
+          <Property Name="Паспортные данные" Type="varchar(max)" />
+          <Property Name="Номер зачётки" Type="bigint" />
+          <Property Name="Дата поступления" Type="date" />
+          <Property Name="Группа" Type="varchar" MaxLength="30" />
+          <Property Name="Курс" Type="tinyint" />
+          <Property Name="Очная форма обучения" Type="bit" />
+          <Property Name="Наименование специальности" Type="varchar" MaxLength="50" />
+          <Property Name="Описание специальности" Type="varchar(max)" />
+        </EntityType>-->
+        <Association Name="FK_Оценки_Предметы">
+          <End Role="Предметы" Type="Self.Предметы" Multiplicity="0..1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Предметы">
+              <PropertyRef Name="Код предмета" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Код предмета" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оценки_Студенты">
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="0..1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Студенты">
+              <PropertyRef Name="Код студента" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Код студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты_Специальности">
+          <End Role="Специальности" Type="Self.Специальности" Multiplicity="0..1" />
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Специальности">
+              <PropertyRef Name="Код специальности" />
+            </Principal>
+            <Dependent Role="Студенты">
+              <PropertyRef Name="Код специальности" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище bdIlinModelContainer">
+          <EntitySet Name="Оценки" EntityType="Self.Оценки" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Предметы" EntityType="Self.Предметы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Специальности" EntityType="Self.Специальности" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Студенты" EntityType="Self.Студенты" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Оценки_Предметы" Association="Self.FK_Оценки_Предметы">
+            <End Role="Предметы" EntitySet="Предметы" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оценки_Студенты" Association="Self.FK_Оценки_Студенты">
+            <End Role="Студенты" EntitySet="Студенты" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты_Специальности" Association="Self.FK_Студенты_Специальности">
+            <End Role="Специальности" EntitySet="Специальности" />
+            <End Role="Студенты" EntitySet="Студенты" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bdIlinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Оценки">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код_студента" Type="Int64" />
+          <Property Name="Дата_экзамена" Type="DateTime" Precision="0" />
+          <Property Name="Код_предмета" Type="Int64" />
+          <Property Name="Оценка" Type="Byte" />
+          <Property Name="Код" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Предметы" Relationship="Self.FK_Оценки_Предметы" FromRole="Оценки" ToRole="Предметы" />
+          <NavigationProperty Name="Студенты" Relationship="Self.FK_Оценки_Студенты" FromRole="Оценки" ToRole="Студенты" />
+        </EntityType>
+        <EntityType Name="Предметы">
+          <Key>
+            <PropertyRef Name="Код_предмета" />
+          </Key>
+          <Property Name="Код_предмета" Type="Int64" Nullable="false" />
+          <Property Name="Наименование_предмета" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Описание_предмета" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Оценки" Relationship="Self.FK_Оценки_Предметы" FromRole="Предметы" ToRole="Оценки" />
+        </EntityType>
+        <EntityType Name="Специальности">
+          <Key>
+            <PropertyRef Name="Код_специальности" />
+          </Key>
+          <Property Name="Код_специальности" Type="Int64" Nullable="false" />
+          <Property Name="Наименование_специальности" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Описание_специальности" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Студенты" Relationship="Self.FK_Студенты_Специальности" FromRole="Специальности" ToRole="Студенты" />
+        </EntityType>
+        <EntityType Name="Студенты">
+          <Key>
+            <PropertyRef Name="Код_студента" />
+          </Key>
+          <Property Name="Код_студента" Type="Int64" Nullable="false" />
+          <Property Name="ФИО" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Пол" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Дата_рождения" Type="DateTime" Precision="0" />
+          <Property Name="Родители" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Адрес" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Телефон" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Паспортные_данные" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Номер_зачётки" Type="Int64" />
+          <Property Name="Дата_поступления" Type="DateTime" Precision="0" />
+          <Property Name="Группа" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Курс" Type="Byte" />
+          <Property Name="Код_специальности" Type="Int64" />
+          <Property Name="Очная_форма_обучения" Type="Boolean" />
+          <NavigationProperty Name="Оценки" Relationship="Self.FK_Оценки_Студенты" FromRole="Студенты" ToRole="Оценки" />
+          <NavigationProperty Name="Специальности" Relationship="Self.FK_Студенты_Специальности" FromRole="Студенты" ToRole="Специальности" />
+        </EntityType>
+        <Association Name="FK_Оценки_Предметы">
+          <End Role="Предметы" Type="Self.Предметы" Multiplicity="0..1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Предметы">
+              <PropertyRef Name="Код_предмета" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Код_предмета" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оценки_Студенты">
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="0..1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Студенты">
+              <PropertyRef Name="Код_студента" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Код_студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты_Специальности">
+          <End Role="Специальности" Type="Self.Специальности" Multiplicity="0..1" />
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Специальности">
+              <PropertyRef Name="Код_специальности" />
+            </Principal>
+            <Dependent Role="Студенты">
+              <PropertyRef Name="Код_специальности" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bdIlinEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Оценки" EntityType="Self.Оценки" />
+          <EntitySet Name="Предметы" EntityType="Self.Предметы" />
+          <EntitySet Name="Специальности" EntityType="Self.Специальности" />
+          <EntitySet Name="Студенты" EntityType="Self.Студенты" />
+          <AssociationSet Name="FK_Оценки_Предметы" Association="Self.FK_Оценки_Предметы">
+            <End Role="Предметы" EntitySet="Предметы" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оценки_Студенты" Association="Self.FK_Оценки_Студенты">
+            <End Role="Студенты" EntitySet="Студенты" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты_Специальности" Association="Self.FK_Студенты_Специальности">
+            <End Role="Специальности" EntitySet="Специальности" />
+            <End Role="Студенты" EntitySet="Студенты" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище bdIlinModelContainer" CdmEntityContainer="bdIlinEntities">
+          <EntitySetMapping Name="Оценки">
+            <EntityTypeMapping TypeName="bdIlinModel.Оценки">
+              <MappingFragment StoreEntitySet="Оценки">
+                <ScalarProperty Name="Код_студента" ColumnName="Код студента" />
+                <ScalarProperty Name="Дата_экзамена" ColumnName="Дата экзамена" />
+                <ScalarProperty Name="Код_предмета" ColumnName="Код предмета" />
+                <ScalarProperty Name="Оценка" ColumnName="Оценка" />
+                <ScalarProperty Name="Код" ColumnName="Код" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Предметы">
+            <EntityTypeMapping TypeName="bdIlinModel.Предметы">
+              <MappingFragment StoreEntitySet="Предметы">
+                <ScalarProperty Name="Код_предмета" ColumnName="Код предмета" />
+                <ScalarProperty Name="Наименование_предмета" ColumnName="Наименование предмета" />
+                <ScalarProperty Name="Описание_предмета" ColumnName="Описание предмета" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Специальности">
+            <EntityTypeMapping TypeName="bdIlinModel.Специальности">
+              <MappingFragment StoreEntitySet="Специальности">
+                <ScalarProperty Name="Код_специальности" ColumnName="Код специальности" />
+                <ScalarProperty Name="Наименование_специальности" ColumnName="Наименование специальности" />
+                <ScalarProperty Name="Описание_специальности" ColumnName="Описание специальности" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Студенты">
+            <EntityTypeMapping TypeName="bdIlinModel.Студенты">
+              <MappingFragment StoreEntitySet="Студенты">
+                <ScalarProperty Name="Код_студента" ColumnName="Код студента" />
+                <ScalarProperty Name="ФИО" ColumnName="ФИО" />
+                <ScalarProperty Name="Пол" ColumnName="Пол" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+                <ScalarProperty Name="Родители" ColumnName="Родители" />
+                <ScalarProperty Name="Адрес" ColumnName="Адрес" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Паспортные_данные" ColumnName="Паспортные данные" />
+                <ScalarProperty Name="Номер_зачётки" ColumnName="Номер зачётки" />
+                <ScalarProperty Name="Дата_поступления" ColumnName="Дата поступления" />
+                <ScalarProperty Name="Группа" ColumnName="Группа" />
+                <ScalarProperty Name="Курс" ColumnName="Курс" />
+                <ScalarProperty Name="Код_специальности" ColumnName="Код специальности" />
+                <ScalarProperty Name="Очная_форма_обучения" ColumnName="Очная форма обучения" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
